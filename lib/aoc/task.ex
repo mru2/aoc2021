@@ -6,25 +6,16 @@ defmodule Mix.Tasks.Aoc do
 
   use Mix.Task
 
+
   @impl Mix.Task
 
   def run(args) do
     [day | opts] = args
 
-    {flags, _args, _invalid} = OptionParser.parse(opts, strict: [test: :boolean, ints: :boolean])
+    {flags, _args, _invalid} = OptionParser.parse(opts, strict: [test: :boolean, lines: :boolean])
 
-    file = case flags[:test] do
-      true -> "inputs/#{day}.test"
-      false -> "inputs/#{day}"
-    end |> File.read!()
+    res = Aoc.run(Aoc.read(day, flags), String.to_atom(day))
 
-    input = cond do
-      flags[:ints] == true -> Aoc.parse_numbers(file)
-      true -> Aoc.parse_lines(file)
-    end
-
-    res = apply(Aoc, :run, [String.to_atom(day), input])
-
-    Mix.shell().info(inspect(res))
+    IO.inspect(res)
   end
 end
