@@ -19,6 +19,6 @@ defmodule Aoc.Day03 do
   end
 
   def bonus(data) do
-    data
+    nil
   end
 end
