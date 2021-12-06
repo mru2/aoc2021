@@ -1,10 +1,11 @@
 defmodule Aoc.Day05 do
   import Aoc
+  import Enum
 
   def parse(input) do
     input
     |> parse_lines()
-    |> Enum.map(&parse_line/1)
+    |> map(&parse_line/1)
   end
 
   @doc """
@@ -17,14 +18,14 @@ defmodule Aoc.Day05 do
   end
 
   def incr_line({p1, p2}, grid) do
-    Enum.reduce(line(p1, p2), grid, fn point, grid ->
+    reduce(line(p1, p2), grid, fn point, grid ->
       Map.update(grid, point, 1, &(&1 + 1))
     end)
   end
 
   def line({x1, y}, {x2, y}), do: for(x <- x1..x2, do: {x, y})
   def line({x, y1}, {x, y2}), do: for(y <- y1..y2, do: {x, y})
-  def line({x1, y1}, {x2, y2}) when abs(x2 - x1) == abs(y2 - y1), do: Enum.zip(x1..x2, y1..y2)
+  def line({x1, y1}, {x2, y2}) when abs(x2 - x1) == abs(y2 - y1), do: zip(x1..x2, y1..y2)
 
   @doc """
   iex> Aoc.Day05.run([
@@ -43,13 +44,13 @@ defmodule Aoc.Day05 do
   """
   def run(data) do
     data
-    |> Enum.filter(fn
+    |> filter(fn
       {{x, _}, {x, _}} -> true
       {{_, y}, {_, y}} -> true
       _ -> false
     end)
-    |> Enum.reduce(%{}, &incr_line/2)
-    |> Enum.filter(fn {_point, val} -> val > 1 end)
+    |> reduce(%{}, &incr_line/2)
+    |> filter(fn {_point, val} -> val > 1 end)
     |> length()
   end
 
@@ -70,8 +71,8 @@ defmodule Aoc.Day05 do
   """
   def bonus(data) do
     data
-    |> Enum.reduce(%{}, &incr_line/2)
-    |> Enum.filter(fn {_point, val} -> val > 1 end)
+    |> reduce(%{}, &incr_line/2)
+    |> filter(fn {_point, val} -> val > 1 end)
     |> length()
   end
 end

@@ -1,5 +1,6 @@
 defmodule Aoc.Day06 do
   import Aoc
+  import Enum
 
   @base %{
     0 => 0,
@@ -14,7 +15,7 @@ defmodule Aoc.Day06 do
   }
 
   def parse(input) do
-    input |> String.trim() |> String.split(",", trim: true) |> Enum.map(&to_i/1)
+    input |> String.trim() |> String.split(",", trim: true) |> map(&to_i/1)
   end
 
   @doc """
@@ -22,9 +23,9 @@ defmodule Aoc.Day06 do
   26
   """
   def run(data, runs \\ 80) do
-    counts = tally(data) |> Enum.into(%{})
+    counts = tally(data) |> into(%{})
 
-    Enum.reduce(1..runs, Map.merge(@base, counts), fn _,
+    reduce(1..runs, Map.merge(@base, counts), fn _,
                                                       %{
                                                         0 => i0,
                                                         1 => i1,
@@ -49,7 +50,7 @@ defmodule Aoc.Day06 do
       }
     end)
     |> Map.values()
-    |> Enum.sum()
+    |> sum()
   end
 
   def bonus(data), do: run(data, 256)

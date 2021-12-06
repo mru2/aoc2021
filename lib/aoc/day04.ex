@@ -1,21 +1,22 @@
 defmodule Aoc.Day04 do
   import Aoc
+  import Enum
 
   def parse(input) do
     [roll | rest] = parse_lines(input)
 
-    grids = rest |> Enum.chunk_every(5)
+    grids = rest |> chunk_every(5)
 
-    {parse_numbers(roll, ","), Enum.map(grids, &parse_grid/1)}
+    {parse_numbers(roll, ","), map(grids, &parse_grid/1)}
   end
 
   def parse_grid(rows) do
-    rows |> Enum.map(&parse_numbers(&1, " "))
+    rows |> map(&parse_numbers(&1, " "))
   end
 
   def apply_roll(number, grid) do
-    Enum.map(grid, fn row ->
-      Enum.map(row, fn
+    map(grid, fn row ->
+      map(row, fn
         ^number -> 0
         other -> other
       end)
@@ -114,11 +115,11 @@ defmodule Aoc.Day04 do
 
   def winning?(_), do: false
 
-  def sum(grid), do: grid |> Enum.map(&Enum.sum/1) |> Enum.sum()
+  def sum_grid(grid), do: grid |> map(&sum/1) |> sum()
 
   def walk(numbers, grids, fun) do
-    Enum.reduce_while(numbers, grids, fn number, grids ->
-      new_grids = Enum.map(grids, &apply_roll(number, &1))
+    reduce_while(numbers, grids, fn number, grids ->
+      new_grids = map(grids, &apply_roll(number, &1))
 
       fun.(new_grids, number)
     end)
@@ -126,9 +127,9 @@ defmodule Aoc.Day04 do
 
   def run({numbers, grids}) do
     walk(numbers, grids, fn new_grids, number ->
-      case Enum.find(new_grids, &winning?/1) do
+      case find(new_grids, &winning?/1) do
         nil -> {:cont, new_grids}
-        grid -> {:halt, sum(grid) * number}
+        grid -> {:halt, sum_grid(grid) * number}
       end
     end)
   end
@@ -138,13 +139,13 @@ defmodule Aoc.Day04 do
       case new_grids do
         [last] ->
           if winning?(last) do
-            {:halt, sum(last) * number}
+            {:halt, sum_grid(last) * number}
           else
             {:cont, [last]}
           end
 
         _ ->
-          {:cont, Enum.reject(new_grids, &winning?/1)}
+          {:cont, reject(new_grids, &winning?/1)}
       end
     end)
   end
