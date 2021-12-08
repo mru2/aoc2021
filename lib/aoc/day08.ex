@@ -142,19 +142,18 @@ defmodule Aoc.Day08 do
   end
 
   def run(data) do
+    known_digit? = fn digit ->
+      case size(digit) do
+        2 -> true
+        3 -> true
+        4 -> true
+        7 -> true
+        _ -> false
+      end
+    end
+
     data
-    |> map(fn {_signals, output} ->
-      filter(output, fn segment ->
-        case size(segment) do
-          2 -> true
-          3 -> true
-          4 -> true
-          7 -> true
-          _ -> false
-        end
-      end)
-      |> length()
-    end)
+    |> map(fn {_signals, output} -> output |> count(known_digit?) end)
     |> sum()
   end
 

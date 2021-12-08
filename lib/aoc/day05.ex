@@ -50,8 +50,7 @@ defmodule Aoc.Day05 do
       _ -> false
     end)
     |> reduce(%{}, &incr_line/2)
-    |> filter(fn {_point, val} -> val > 1 end)
-    |> length()
+    |> count(fn {_point, val} -> val > 1 end)
   end
 
   @doc """
@@ -72,7 +71,6 @@ defmodule Aoc.Day05 do
   def bonus(data) do
     data
     |> reduce(%{}, &incr_line/2)
-    |> filter(fn {_point, val} -> val > 1 end)
-    |> length()
+    |> count(fn {_point, val} -> val > 1 end)
   end
 end

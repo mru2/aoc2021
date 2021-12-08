@@ -12,8 +12,7 @@ defmodule Aoc.Day01 do
     do:
       data
       |> pairs()
-      |> filter(fn {a, b} -> b > a end)
-      |> length()
+      |> count(fn {a, b} -> b > a end)
 
   @doc """
   iex> Aoc.Day01.bonus([199,200,208,210,200,207,240,269,260,263])
@@ -25,6 +24,5 @@ defmodule Aoc.Day01 do
       |> triplets()
       |> map(fn {a, b, c} -> a + b + c end)
       |> pairs()
-      |> filter(fn {a, b} -> b > a end)
-      |> length()
+      |> count(fn {a, b} -> b > a end)
 end
