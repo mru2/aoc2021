@@ -18,12 +18,10 @@ defmodule Mix.Tasks.Aoc do
 
     parsed = apply(module, :parse, [data]) |> IO.inspect(label: "Data")
 
-    # if Kernel.function_exported?(module, :run, 1) do
-      apply(module, :run, [parsed]) |> IO.inspect(label: "Run")
-    # end
+    {time, res} = :timer.tc(fn -> apply(module, :run, [parsed]) end)
+    IO.puts "Run: #{res} (#{time / 1000} ms)"
 
-    # if Kernel.function_exported?(module, :bonus, 1) do
-      apply(module, :bonus, [parsed]) |> IO.inspect(label: "Bonus")
-    # end
+    {time, res} = :timer.tc(fn -> apply(module, :bonus, [parsed]) end)
+    IO.puts "Run: #{res} (#{time / 1000} ms)"
   end
 end
