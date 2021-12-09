@@ -69,24 +69,20 @@ defmodule Aoc.Day09 do
     |> sum()
   end
 
-  def bonus(data) do
-    grow_groups = fn
-      9, _, _ ->
-        9
+  def grow(9, _neighbours, _index), do: 9
+  def grow({:group, i}, _neighbours, _index), do: {:group, i}
 
-      {:group, i}, _, _ ->
-        {:group, i}
-
-      val, neighbours, _ ->
-        case find(neighbours, &match?({:group, _}, &1)) do
-          nil -> val
-          group -> group
-        end
+  def grow(val, neighbours, _index) do
+    case find(neighbours, &match?({:group, _}, &1)) do
+      nil -> val
+      group -> group
     end
+  end
 
+  def bonus(data) do
     data
     |> map_low_points(fn _val, index -> {:group, index} end)
-    |> walk(&apply_grid(&1, grow_groups))
+    |> walk(fn grid -> grid |> apply_grid(&grow/3) end)
     |> grid_values()
     |> reject(&(&1 == 9))
     |> tally()
