@@ -17,7 +17,7 @@ defmodule Aoc do
   def to_i(str), do: String.to_integer(str)
 
   def tally(list),
-    do: list |> Enum.group_by(& &1) |> Enum.map(fn {val, elems} -> {val, length(elems)} end)
+    do: list |> Enum.group_by(& &1) |> Enum.map(fn {val, elems} -> {val, length(elems)} end) |> Enum.sort_by(fn {_val, len} -> -len end)
 
   def most_frequent(list),
     do: list |> tally() |> Enum.max_by(fn {_val, count} -> count end) |> elem(0)
