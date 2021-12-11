@@ -2,20 +2,20 @@ defmodule Aoc.Day10 do
   import Aoc
   import Enum
 
-  def parse(input), do: input |> parse_lines() |> map(&String.split(&1, "", trim: true))
+  def parse(input), do: input |> parse_lines() |> map(&parse_chars/1)
 
   @doc """
-  iex> "{([(<{}[<>[]}>{[]{[(<()>" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "{([(<{}[<>[]}>{[]{[(<()>" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:corrupted, "}"}
-  iex> "[[<[([]))<([[{}[[()]]]" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "[[<[([]))<([[{}[[()]]]" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:corrupted, ")"}
-  iex> "[{[{({}]{}}([{[{{{}}([]" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "[{[{({}]{}}([{[{{{}}([]" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:corrupted, "]"}
-  iex> "[<(<(<(<{}))><([]([]()" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "[<(<(<(<{}))><([]([]()" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:corrupted, ")"}
-  iex> "<{([([[(<>()){}]>(<<{{" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "<{([([[(<>()){}]>(<<{{" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:corrupted, ">"}
-  iex> "[({(<(())[]>[[{[]{<()<>>" |> String.split("", trim: true) |> Aoc.Day10.check()
+  iex> "[({(<(())[]>[[{[]{<()<>>" |> Aoc.parse_chars() |> Aoc.Day10.check()
   {:incomplete, ["{", "{", "[", "[", "(", "{", "(", "["]}
   """
   def check(line), do: check(line, [])

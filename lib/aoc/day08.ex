@@ -2,7 +2,7 @@ defmodule Aoc.Day08 do
   import Aoc
   import Enum, except: [split: 2]
   import MapSet, only: [size: 1, difference: 2, subset?: 2]
-  import String, only: [split: 2, split: 3]
+  import String, only: [split: 2]
 
   def parse(input), do: input |> parse_lines() |> map(&parse_line/1)
 
@@ -13,7 +13,7 @@ defmodule Aoc.Day08 do
     {parse_group.(signals), parse_group.(output)}
   end
 
-  def to_digit(string), do: string |> split("", trim: true) |> into(MapSet.new())
+  def to_digit(string), do: string |> parse_chars() |> into(MapSet.new())
 
   @doc """
   Decode number based on segment count & included shapes

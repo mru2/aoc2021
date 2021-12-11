@@ -6,6 +6,8 @@ defmodule Aoc do
 
   def parse_numbers(input, sep \\ "\n"), do: input |> String.split(sep, trim: true) |> Enum.map(&to_i/1)
 
+  def parse_chars(input), do: String.split(input, "", trim: true)
+
   def pairs([h1, h2 | rest]), do: [{h1, h2} | pairs([h2 | rest])]
   def pairs(_), do: []
 

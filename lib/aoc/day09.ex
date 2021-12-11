@@ -7,8 +7,7 @@ defmodule Aoc.Day09 do
     |> parse_lines()
     |> map(fn line ->
       line
-      |> String.split("", trim: true)
-      |> map(&to_i/1)
+      |> parse_numbers("")
     end)
   end
 

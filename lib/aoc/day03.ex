@@ -5,7 +5,7 @@ defmodule Aoc.Day03 do
   def parse(input) do
     input
     |> parse_lines()
-    |> map(&String.split(&1, "", trim: true))
+    |> map(&parse_chars/1)
   end
 
   def bits_to_int(bits), do: bits |> join("") |> String.to_integer(2)
