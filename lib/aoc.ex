@@ -2,9 +2,11 @@ defmodule Aoc do
   @moduledoc """
   Various helpers
   """
-  def parse_lines(input), do: String.split(input, "\n", trim: true)
+  def parse_lines(input), do: String.split(input, "\n", trim: true) |> Enum.map(&String.trim/1)
 
   def parse_numbers(input, sep \\ "\n"), do: input |> String.split(sep, trim: true) |> Enum.map(&to_i/1)
+
+  def parse_digits(input), do: parse_numbers(input, "")
 
   def parse_chars(input), do: String.split(input, "", trim: true)
 

@@ -5,10 +5,7 @@ defmodule Aoc.Day09 do
   def parse(input) do
     input
     |> parse_lines()
-    |> map(fn line ->
-      line
-      |> parse_numbers("")
-    end)
+    |> map(&parse_digits/1)
   end
 
   def get(_grid, {i, _j}) when i < 0, do: nil
