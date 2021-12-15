@@ -4,6 +4,12 @@ defmodule Aoc.Day01 do
 
   def parse(input), do: parse_numbers(input)
 
+  def pairs([h1, h2 | rest]), do: [{h1, h2} | pairs([h2 | rest])]
+  def pairs(_), do: []
+
+  def triplets([h1, h2, h3 | rest]), do: [{h1, h2, h3} | triplets([h2, h3 | rest])]
+  def triplets(_), do: []
+
   @doc """
   iex> Aoc.Day01.run([199,200,208,210,200,207,240,269,260,263])
   7

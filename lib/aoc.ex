@@ -10,12 +10,6 @@ defmodule Aoc do
 
   def parse_chars(input), do: String.split(input, "", trim: true)
 
-  def pairs([h1, h2 | rest]), do: [{h1, h2} | pairs([h2 | rest])]
-  def pairs(_), do: []
-
-  def triplets([h1, h2, h3 | rest]), do: [{h1, h2, h3} | triplets([h2, h3 | rest])]
-  def triplets(_), do: []
-
   def transpose(rows), do: List.zip(rows) |> Enum.map(&Tuple.to_list/1)
 
   def to_i(str), do: String.to_integer(str)
@@ -28,4 +22,6 @@ defmodule Aoc do
 
   def least_frequent(list),
     do: list |> tally() |> Enum.min_by(fn {_val, count} -> count end) |> elem(0)
+
+  def increment(map, key, val \\ 1), do: Map.update(map, key, val, fn existing -> existing + val end)
 end
