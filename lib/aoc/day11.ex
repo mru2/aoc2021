@@ -17,8 +17,8 @@ defmodule Aoc.Day11 do
         {put_in(grid, [coords], n + 1), flashes}
     end
   end
-  def handle_step({grid, _flashes} = acc) do
-    {grid, flashes} = Grid.walk(grid, acc, &handle_bump/2)
+  def handle_step({grid, flashes}) do
+    {grid, flashes} = Grid.reduce_self(grid, flashes, &handle_bump/2)
 
     {Grid.map(grid, fn
        -1 -> 0

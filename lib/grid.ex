@@ -75,9 +75,19 @@ defmodule Grid do
     |> Enum.filter(&valid_coords?(grid, &1))
   end
 
+  def close_neighbours(grid, {i, j}) do
+    [
+      {i - 1, j},
+      {i, j - 1},
+      {i, j + 1},
+      {i + 1, j},
+    ]
+    |> Enum.filter(&valid_coords?(grid, &1))
+  end
+
   # Iterates over all grid items with a custom accumulator
   # Callback : fn(grid, coords, acc) -> {grid, acc}
-  def walk(grid, acc, fun), do: coords(grid) |> Enum.reduce(acc, fun)
+  def reduce_self(grid, acc, fun), do: coords(grid) |> Enum.reduce({grid, acc}, fun)
 
   def map(grid, fun),
     do: %Grid{grid | values: :array.map(fn _i, val -> fun.(val) end, grid.values)}
