@@ -21,4 +21,5 @@ defmodule AocTest do
   doctest Aoc.Day18
   doctest Aoc.Day19
   doctest Aoc.Day20
+  doctest Aoc.Day21
 end
